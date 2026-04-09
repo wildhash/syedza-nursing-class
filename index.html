@@ -1,0 +1,947 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Global Nursing Careers + AI Tools | Syedza University, Padang</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap');
+
+  :root {
+    --bg: #0a0f1e;
+    --surface: #111827;
+    --surface2: #1a2336;
+    --accent: #00d4a8;
+    --accent2: #3b82f6;
+    --accent3: #f59e0b;
+    --red: #ef4444;
+    --text: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border: rgba(255,255,255,0.08);
+    --glow: 0 0 40px rgba(0,212,168,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow: hidden;
+  }
+
+  /* ── LANGUAGE TOGGLE ── */
+  #lang-toggle {
+    position: fixed;
+    top: 1.2rem;
+    right: 1.5rem;
+    z-index: 100;
+    display: flex;
+    gap: 0;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  #lang-toggle button {
+    padding: .45rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: .8rem;
+    font-weight: 600;
+    background: transparent;
+    color: var(--text-muted);
+    border: none;
+    cursor: pointer;
+    transition: all .2s;
+    letter-spacing: .05em;
+    text-transform: uppercase;
+  }
+  #lang-toggle button.active {
+    background: var(--accent);
+    color: #0a0f1e;
+  }
+
+  /* ── SLIDE CONTAINER ── */
+  #slides {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 3rem 5rem;
+    opacity: 0;
+    transform: translateX(60px);
+    transition: all .5s cubic-bezier(.4,0,.2,1);
+    pointer-events: none;
+    overflow-y: auto;
+  }
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: all;
+  }
+  .slide.exit {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+
+  /* Slide decorative backgrounds */
+  .slide::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: -1;
+  }
+  .slide-cover::before {
+    background:
+      radial-gradient(ellipse 80% 60% at 70% 30%, rgba(0,212,168,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 20% 80%, rgba(59,130,246,0.1) 0%, transparent 50%);
+  }
+  .slide-us::before {
+    background: radial-gradient(ellipse 70% 50% at 80% 40%, rgba(59,130,246,0.1) 0%, transparent 60%);
+  }
+  .slide-ch::before {
+    background: radial-gradient(ellipse 70% 50% at 20% 50%, rgba(239,68,68,0.08) 0%, transparent 60%);
+  }
+  .slide-jobs::before {
+    background: radial-gradient(ellipse 70% 50% at 60% 60%, rgba(245,158,11,0.08) 0%, transparent 60%);
+  }
+  .slide-ai::before {
+    background: radial-gradient(ellipse 80% 60% at 50% 30%, rgba(0,212,168,0.1) 0%, transparent 60%);
+  }
+
+  /* ── SLIDE NUMBER ── */
+  .slide-num {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    font-family: 'DM Mono', monospace;
+    font-size: .75rem;
+    color: var(--text-muted);
+    letter-spacing: .1em;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .slide-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: .8rem;
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+  }
+  .slide-tag::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.05;
+    margin-bottom: 1.2rem;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 3.5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+  h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: .6rem;
+    margin-top: 1.2rem;
+  }
+
+  .subtitle {
+    font-size: clamp(1rem, 2vw, 1.3rem);
+    color: var(--text-muted);
+    font-weight: 300;
+    line-height: 1.6;
+    max-width: 600px;
+  }
+  .subtitle-id {
+    margin-top: .5rem;
+    font-size: clamp(.9rem, 1.5vw, 1.1rem);
+    color: rgba(148,163,184,.6);
+    font-style: italic;
+  }
+
+  p, li {
+    font-size: clamp(.9rem, 1.5vw, 1.05rem);
+    line-height: 1.75;
+    color: var(--text-muted);
+  }
+
+  /* ── GRID LAYOUTS ── */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+  .three-col {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color .3s;
+  }
+  .card:hover {
+    border-color: rgba(0,212,168,0.3);
+  }
+  .card::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0,212,168,.03) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  .card-title {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    font-size: .95rem;
+    color: var(--text);
+    margin-bottom: .4rem;
+  }
+  .card-sub {
+    font-size: .8rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .card-icon {
+    font-size: 1.8rem;
+    margin-bottom: .8rem;
+    display: block;
+  }
+
+  /* ── STEP LIST ── */
+  .step-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+    margin-top: 1rem;
+  }
+  .step-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: .8rem 1.2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: .9rem;
+    transition: all .2s;
+  }
+  .step-list li:hover {
+    border-color: rgba(0,212,168,0.25);
+    background: var(--surface2);
+  }
+  .step-num {
+    font-family: 'DM Mono', monospace;
+    font-size: .75rem;
+    font-weight: 500;
+    color: var(--accent);
+    background: rgba(0,212,168,.1);
+    border-radius: 6px;
+    padding: .2rem .5rem;
+    flex-shrink: 0;
+    margin-top: .1rem;
+  }
+
+  /* ── HIGHLIGHT BOXES ── */
+  .highlight-box {
+    background: linear-gradient(135deg, rgba(0,212,168,.08), rgba(59,130,246,.06));
+    border: 1px solid rgba(0,212,168,.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  .highlight-box p {
+    color: var(--text);
+    font-weight: 500;
+    font-size: .95rem;
+  }
+
+  .warning-box {
+    background: rgba(239,68,68,.06);
+    border: 1px solid rgba(239,68,68,.2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1.5rem;
+  }
+  .warning-box p { color: #fca5a5; font-size: .9rem; }
+
+  /* ── TOOL CHIPS ── */
+  .tool-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .6rem;
+    margin-top: 1rem;
+  }
+  .chip {
+    font-family: 'DM Mono', monospace;
+    font-size: .75rem;
+    padding: .4rem .9rem;
+    border-radius: 100px;
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    background: var(--surface);
+    white-space: nowrap;
+  }
+  .chip.green { border-color: rgba(0,212,168,.4); color: var(--accent); background: rgba(0,212,168,.07); }
+  .chip.blue  { border-color: rgba(59,130,246,.4); color: #93c5fd; background: rgba(59,130,246,.07); }
+  .chip.amber { border-color: rgba(245,158,11,.4); color: #fcd34d; background: rgba(245,158,11,.07); }
+
+  /* ── BILINGUAL BLOCKS ── */
+  .bilingual {
+    display: none;
+  }
+  .bilingual.id-active {
+    display: block;
+  }
+
+  .lang-en { display: block; }
+  .lang-id { display: none; }
+  body.id .lang-en { display: none; }
+  body.id .lang-id { display: block; }
+
+  /* ── STAT CALLOUTS ── */
+  .stat-row {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem 1.8rem;
+    text-align: center;
+    flex: 1;
+    min-width: 140px;
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--accent);
+    display: block;
+    line-height: 1;
+    margin-bottom: .3rem;
+  }
+  .stat-label { font-size: .75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: .08em; }
+
+  /* ── FORMULA ── */
+  .formula {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 1rem 1.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: .85rem;
+    color: var(--accent);
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .4rem;
+  }
+  .formula span {
+    padding: .25rem .6rem;
+    background: rgba(0,212,168,.1);
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+  .formula .arr { color: var(--text-muted); }
+
+  /* ── NAVIGATION ── */
+  #nav {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 50px;
+    padding: .5rem 1.2rem;
+    z-index: 100;
+    box-shadow: 0 8px 32px rgba(0,0,0,.4);
+  }
+  #nav button {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 1rem;
+    padding: .3rem .5rem;
+    border-radius: 6px;
+    transition: all .2s;
+  }
+  #nav button:hover { color: var(--text); background: var(--surface2); }
+  #nav button:disabled { opacity: .3; cursor: default; }
+  #nav .prog {
+    font-family: 'DM Mono', monospace;
+    font-size: .7rem;
+    color: var(--text-muted);
+    min-width: 50px;
+    text-align: center;
+  }
+
+  /* ── PROGRESS BAR ── */
+  #progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width .4s ease;
+    z-index: 200;
+    box-shadow: 0 0 8px var(--accent);
+  }
+
+  /* ── COVER SPECIAL ── */
+  .cover-meta {
+    display: flex;
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+  }
+  .cover-badge {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+    font-size: .8rem;
+    color: var(--text-muted);
+    padding: .4rem .9rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+  }
+  .cover-badge span:first-child { color: var(--accent); }
+
+  /* Scrollbar */
+  .slide::-webkit-scrollbar { width: 4px; }
+  .slide::-webkit-scrollbar-track { background: transparent; }
+  .slide::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  /* Mobile */
+  @media (max-width: 768px) {
+    .slide { padding: 2rem 1.5rem 5rem; }
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    h1 { font-size: 2rem; }
+    h2 { font-size: 1.5rem; }
+    .stat-row { gap: .8rem; }
+    #nav { width: calc(100% - 3rem); justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Progress bar -->
+<div id="progress"></div>
+
+<!-- Language toggle -->
+<div id="lang-toggle">
+  <button class="active" onclick="setLang('en')">EN</button>
+  <button onclick="setLang('id')">ID</button>
+</div>
+
+<!-- Slides -->
+<div id="slides">
+
+  <!-- ── SLIDE 1: COVER ── -->
+  <div class="slide slide-cover active" id="s1">
+    <div class="slide-tag">Syedza University · Padang, Sumatra</div>
+    <h1>
+      <span class="lang-en">Global Nursing<br>Careers + AI Tools</span>
+      <span class="lang-id">Karier Keperawatan Global<br>+ Alat Kecerdasan Buatan</span>
+    </h1>
+    <p class="subtitle lang-en">A practical class for Indonesian nursing students and professionals ready to pursue international opportunities — and use AI to get there faster.</p>
+    <p class="subtitle lang-id">Kelas praktis untuk mahasiswa dan tenaga perawat Indonesia yang siap mengejar peluang internasional — dan menggunakan AI untuk mencapainya lebih cepat.</p>
+    <div class="subtitle-id lang-en">🇮🇩 Kelas dua bahasa tersedia — gunakan tombol EN / ID di pojok kanan atas</div>
+    <div class="cover-meta">
+      <div class="cover-badge"><span>⏱</span> 90–120 menit</div>
+      <div class="cover-badge"><span>🗺</span> <span class="lang-en">U.S. · Switzerland · Europe</span><span class="lang-id">A.S. · Swiss · Eropa</span></div>
+      <div class="cover-badge"><span>🤖</span> <span class="lang-en">AI Tools Included</span><span class="lang-id">Termasuk Alat AI</span></div>
+      <div class="cover-badge"><span>💻</span> GitHub + Live Demos</div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 2: AGENDA ── -->
+  <div class="slide" id="s2">
+    <div class="slide-tag"><span class="lang-en">Agenda</span><span class="lang-id">Agenda</span></div>
+    <h2><span class="lang-en">Today's Program</span><span class="lang-id">Program Hari Ini</span></h2>
+    <div class="two-col" style="margin-top:1rem;">
+      <div>
+        <h3><span class="lang-en">Part A — Career Pathways</span><span class="lang-id">Bagian A — Jalur Karier</span></h3>
+        <ul class="step-list">
+          <li><span class="step-num">01</span><span class="lang-en">Why global nursing demand is real</span><span class="lang-id">Mengapa permintaan perawat global nyata</span></li>
+          <li><span class="step-num">02</span><span class="lang-en">How to work in the U.S. — step by step</span><span class="lang-id">Cara bekerja di A.S. — langkah demi langkah</span></li>
+          <li><span class="step-num">03</span><span class="lang-en">Switzerland &amp; Europe overview</span><span class="lang-id">Gambaran Swiss &amp; Eropa</span></li>
+          <li><span class="step-num">04</span><span class="lang-en">Where to find jobs (Indeed, LinkedIn, more)</span><span class="lang-id">Cara mencari pekerjaan</span></li>
+          <li><span class="step-num">05</span><span class="lang-en">English &amp; interview readiness</span><span class="lang-id">Kesiapan bahasa Inggris &amp; wawancara</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3><span class="lang-en">Part B — AI Tools</span><span class="lang-id">Bagian B — Alat AI</span></h3>
+        <ul class="step-list">
+          <li><span class="step-num">06</span><span class="lang-en">ChatGPT, Claude — your career copilots</span><span class="lang-id">ChatGPT, Claude — mitra karier Anda</span></li>
+          <li><span class="step-num">07</span><span class="lang-en">VS Code, Cursor — professional tools</span><span class="lang-id">VS Code, Cursor — alat profesional</span></li>
+          <li><span class="step-num">08</span><span class="lang-en">GitHub — build your digital portfolio</span><span class="lang-id">GitHub — bangun portofolio digital Anda</span></li>
+          <li><span class="step-num">09</span><span class="lang-en">Lovable — websites without coding</span><span class="lang-id">Lovable — website tanpa coding</span></li>
+          <li><span class="step-num">10</span><span class="lang-en">Live demos + Q&amp;A</span><span class="lang-id">Demo langsung + Tanya Jawab</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 3: DEMAND STATS ── -->
+  <div class="slide" id="s3">
+    <div class="slide-tag"><span class="lang-en">Section 1 — Why This Matters</span><span class="lang-id">Bagian 1 — Mengapa Ini Penting</span></div>
+    <h2><span class="lang-en">The World Needs Nurses</span><span class="lang-id">Dunia Membutuhkan Perawat</span></h2>
+    <p class="lang-en">Healthcare is one of the most stable, high-demand sectors on earth. The U.S. alone has structural shortages projected for decades.</p>
+    <p class="lang-id">Layanan kesehatan adalah salah satu sektor paling stabil dan banyak dibutuhkan di dunia. Amerika Serikat saja memiliki kekurangan tenaga perawat yang diproyeksikan berlangsung selama beberapa dekade.</p>
+    <div class="stat-row">
+      <div class="stat">
+        <span class="stat-num">189K</span>
+        <div class="stat-label lang-en">RN openings/year (U.S.)</div>
+        <div class="stat-label lang-id">Lowongan RN/tahun (A.S.)</div>
+      </div>
+      <div class="stat">
+        <span class="stat-num">1.9M</span>
+        <div class="stat-label lang-en">Healthcare openings/year (U.S.)</div>
+        <div class="stat-label lang-id">Lowongan kesehatan/tahun (A.S.)</div>
+      </div>
+      <div class="stat">
+        <span class="stat-num">+5%</span>
+        <div class="stat-label lang-en">RN job growth 2024–2034</div>
+        <div class="stat-label lang-id">Pertumbuhan kerja RN 2024–2034</div>
+      </div>
+      <div class="stat">
+        <span class="stat-num">Sch.A</span>
+        <div class="stat-label lang-en">Priority visa category for nurses</div>
+        <div class="stat-label lang-id">Kategori visa prioritas untuk perawat</div>
+      </div>
+    </div>
+    <div class="highlight-box">
+      <p class="lang-en">💡 Nurses are on the U.S. <strong>Schedule A shortage list</strong> — meaning employers can sponsor your immigration with fewer bureaucratic barriers than most professions.</p>
+      <p class="lang-id">💡 Perawat masuk dalam <strong>daftar kekurangan Schedule A</strong> A.S. — artinya pemberi kerja dapat mensponsori imigrasi Anda dengan hambatan birokrasi yang lebih sedikit dibanding profesi lain.</p>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 4: U.S. PATHWAY ── -->
+  <div class="slide slide-us" id="s4">
+    <div class="slide-tag"><span class="lang-en">Section 2 — U.S. Pathway</span><span class="lang-id">Bagian 2 — Jalur A.S.</span></div>
+    <h2><span class="lang-en">Working as a Nurse in the U.S.</span><span class="lang-id">Bekerja sebagai Perawat di A.S.</span></h2>
+    <div class="formula">
+      <span class="lang-en">Documents</span><span class="lang-id">Dokumen</span>
+      <span class="arr">→</span>
+      <span class="lang-en">State Board</span><span class="lang-id">Dewan Negara Bagian</span>
+      <span class="arr">→</span>
+      <span>CGFNS/TruMerit</span>
+      <span class="arr">→</span>
+      <span>NCLEX-RN</span>
+      <span class="arr">→</span>
+      <span class="lang-en">English Test</span><span class="lang-id">Tes Bahasa Inggris</span>
+      <span class="arr">→</span>
+      <span class="lang-en">Employer Sponsor</span><span class="lang-id">Sponsor Pemberi Kerja</span>
+      <span class="arr">→</span>
+      <span>VisaScreen / EB-3</span>
+    </div>
+    <ul class="step-list" style="margin-top:1rem;">
+      <li><span class="step-num">1</span><div><strong class="lang-en">Prepare your documents</strong><strong class="lang-id">Siapkan dokumen Anda</strong><br><span class="lang-en">Diploma, transcript, nursing license, passport, employment history, translated records</span><span class="lang-id">Ijazah, transkrip, SIP/STR, paspor, riwayat kerja, dokumen terjemahan</span></div></li>
+      <li><span class="step-num">2</span><div><strong class="lang-en">Choose a U.S. state board</strong><strong class="lang-id">Pilih dewan negara bagian A.S.</strong><br><span class="lang-en">Licensure is state-based (not one national license). Popular: Florida, California, Texas. Apply via NCSBN.</span><span class="lang-id">Lisensi berbasis negara bagian. Populer: Florida, California, Texas. Daftar melalui NCSBN.</span></div></li>
+      <li><span class="step-num">3</span><div><strong>CGFNS / TruMerit credential review</strong><br><span class="lang-en">Verify your foreign nursing credentials for U.S. acceptance.</span><span class="lang-id">Verifikasi kredensial keperawatan Anda untuk penerimaan A.S.</span></div></li>
+      <li><span class="step-num">4</span><div><strong>NCLEX-RN exam</strong><br><span class="lang-en">The U.S. national nursing licensure exam. Pass this and you are licensed.</span><span class="lang-id">Ujian lisensi keperawatan nasional A.S. Lulus ini berarti Anda sudah berlisensi.</span></div></li>
+      <li><span class="step-num">5</span><div><strong class="lang-en">English proficiency test</strong><strong class="lang-id">Tes kemampuan bahasa Inggris</strong><br><span class="lang-en">Required for VisaScreen. IELTS or TOEFL. In-person versions only (no at-home tests accepted).</span><span class="lang-id">Diperlukan untuk VisaScreen. IELTS atau TOEFL. Hanya versi tatap muka yang diterima.</span></div></li>
+      <li><span class="step-num">6</span><div><strong class="lang-en">Employer sponsorship → EB-3 / Schedule A visa</strong><strong class="lang-id">Sponsor pemberi kerja → visa EB-3 / Schedule A</strong><br><span class="lang-en">The employer files your immigration petition. Nurses qualify under Schedule A priority.</span><span class="lang-id">Pemberi kerja mengajukan petisi imigrasi Anda. Perawat memenuhi syarat dalam prioritas Schedule A.</span></div></li>
+    </ul>
+  </div>
+
+  <!-- ── SLIDE 5: SWITZERLAND / EUROPE ── -->
+  <div class="slide slide-ch" id="s5">
+    <div class="slide-tag"><span class="lang-en">Section 3 — Switzerland &amp; Europe</span><span class="lang-id">Bagian 3 — Swiss &amp; Eropa</span></div>
+    <h2><span class="lang-en">High Pay, Higher Barriers</span><span class="lang-id">Gaji Tinggi, Hambatan Lebih Besar</span></h2>
+    <div class="two-col">
+      <div>
+        <div class="card">
+          <span class="card-icon">🇨🇭</span>
+          <div class="card-title">Switzerland</div>
+          <div class="card-sub lang-en">Excellent pay. Nursing is a regulated profession — foreign qualifications must be recognized via the <strong>Swiss Red Cross</strong>. You will need strong German, French, or Italian depending on region. Very competitive.</div>
+          <div class="card-sub lang-id">Gaji sangat baik. Keperawatan adalah profesi teratur — kualifikasi asing harus diakui melalui <strong>Palang Merah Swiss</strong>. Anda memerlukan kemampuan bahasa Jerman, Prancis, atau Italia yang kuat sesuai wilayah. Sangat kompetitif.</div>
+        </div>
+        <div class="card" style="margin-top:1rem;">
+          <span class="card-icon">🇩🇪</span>
+          <div class="card-title">Germany</div>
+          <div class="card-sub lang-en">Growing demand. Requires <strong>B2 German</strong> for nursing specialists from outside the EU. Official pathway via Make It In Germany. Recognition required.</div>
+          <div class="card-sub lang-id">Permintaan tumbuh. Memerlukan <strong>bahasa Jerman B2</strong> untuk spesialis keperawatan dari luar EU. Pengakuan kualifikasi diperlukan.</div>
+        </div>
+      </div>
+      <div>
+        <div class="card">
+          <span class="card-icon">🇪🇺</span>
+          <div class="card-title lang-en">Europe broadly</div>
+          <div class="card-title lang-id">Eropa secara umum</div>
+          <div class="card-sub lang-en">EURES is the EU job mobility portal — useful for job listings across Europe. Language is always the main barrier outside the U.K.</div>
+          <div class="card-sub lang-id">EURES adalah portal mobilitas pekerjaan EU — berguna untuk lowongan di seluruh Eropa. Bahasa selalu menjadi hambatan utama di luar Inggris.</div>
+        </div>
+        <div class="highlight-box" style="margin-top:1rem; padding:1rem;">
+          <p class="lang-en">📌 For most Indonesian nurses, the <strong>U.S. is the clearer first target</strong>. English-based, structured NCLEX path, employer sponsorship available. Europe is excellent once you have international experience or the language skills.</p>
+          <p class="lang-id">📌 Bagi sebagian besar perawat Indonesia, <strong>A.S. adalah target pertama yang lebih jelas</strong>. Berbasis bahasa Inggris, jalur NCLEX terstruktur, sponsor tersedia. Eropa sangat baik setelah Anda memiliki pengalaman internasional atau kemampuan bahasa.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 6: JOB SEARCH ── -->
+  <div class="slide slide-jobs" id="s6">
+    <div class="slide-tag"><span class="lang-en">Section 4 — Finding Jobs</span><span class="lang-id">Bagian 4 — Mencari Pekerjaan</span></div>
+    <h2><span class="lang-en">Where to Find Jobs</span><span class="lang-id">Di Mana Mencari Pekerjaan</span></h2>
+    <div class="three-col">
+      <div class="card">
+        <span class="card-icon">🔍</span>
+        <div class="card-title">Indeed.com</div>
+        <div class="card-sub lang-en">Best for international nurse + visa sponsorship searches. Try:<br><br>"international registered nurse visa sponsorship"<br>"RN visa sponsorship Florida"<br>"Bahasa speaking caregiver Los Angeles"</div>
+        <div class="card-sub lang-id">Terbaik untuk pencarian perawat internasional + sponsor visa. Coba:<br><br>"international registered nurse visa sponsorship"<br>"RN visa sponsorship Florida"<br>"Bahasa speaking caregiver Los Angeles"</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">💼</span>
+        <div class="card-title">LinkedIn</div>
+        <div class="card-sub lang-en">Connect with recruiters, nurse hiring managers, and alumni. Search by location and specialty. Follow hospital systems and staffing agencies actively hiring internationally.</div>
+        <div class="card-sub lang-id">Terhubung dengan rekruter, manajer perekrutan perawat, dan alumni. Cari berdasarkan lokasi dan spesialisasi. Ikuti sistem rumah sakit dan agen staffing yang aktif merekrut secara internasional.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🏥</span>
+        <div class="card-title lang-en">Hospital Career Pages</div>
+        <div class="card-title lang-id">Halaman Karier Rumah Sakit</div>
+        <div class="card-sub lang-en">Apply directly to major hospital systems, long-term care groups, dialysis companies (DaVita, Fresenius), rehab centers, and nursing staffing agencies with international programs.</div>
+        <div class="card-sub lang-id">Lamar langsung ke sistem rumah sakit besar, kelompok perawatan jangka panjang, perusahaan dialisis, pusat rehabilitasi, dan agen staffing perawat dengan program internasional.</div>
+      </div>
+    </div>
+    <div class="two-col" style="margin-top:1rem;">
+      <div class="card">
+        <span class="card-icon">🌍</span>
+        <div class="card-title">EURES (europa.eu/eures)</div>
+        <div class="card-sub lang-en">EU job mobility portal — useful when targeting Switzerland, Germany, Netherlands, or other European countries.</div>
+        <div class="card-sub lang-id">Portal mobilitas pekerjaan EU — berguna saat menarget Swiss, Jerman, Belanda, atau negara Eropa lainnya.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">📌</span>
+        <div class="card-title">Craigslist <span style="font-size:.75rem; color:var(--text-muted)">— use carefully</span></div>
+        <div class="card-sub lang-en">Good for <strong>local care roles</strong> in specific cities (L.A., S.F., Seattle). Private duty, live-in care, family assistance. Always verify employers. Never pay upfront fees. Cross-check websites and identity.</div>
+        <div class="card-sub lang-id">Bagus untuk <strong>peran perawatan lokal</strong> di kota tertentu (L.A., S.F., Seattle). Tugas pribadi, perawatan live-in, bantuan keluarga. Selalu verifikasi pemberi kerja. Jangan pernah membayar biaya di muka.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 7: LOS ANGELES / BAHASA ── -->
+  <div class="slide slide-jobs" id="s7">
+    <div class="slide-tag"><span class="lang-en">Spotlight — Los Angeles</span><span class="lang-id">Sorotan — Los Angeles</span></div>
+    <h2><span class="lang-en">L.A. and the Bahasa Advantage</span><span class="lang-id">L.A. dan Keunggulan Berbahasa Indonesia</span></h2>
+    <p class="lang-en">Los Angeles and broader Southern California have one of the largest Indonesian and Southeast Asian communities in the U.S. This creates a <strong>real market advantage</strong> for Bahasa speakers in healthcare.</p>
+    <p class="lang-id">Los Angeles dan California Selatan yang lebih luas memiliki salah satu komunitas Indonesia dan Asia Tenggara terbesar di A.S. Ini menciptakan <strong>keunggulan pasar nyata</strong> bagi penutur Bahasa Indonesia di bidang kesehatan.</p>
+    <div class="two-col" style="margin-top:1.5rem;">
+      <div>
+        <h3><span class="lang-en">Where Bahasa helps</span><span class="lang-id">Di mana Bahasa membantu</span></h3>
+        <ul class="step-list">
+          <li><span class="step-num">✓</span><span class="lang-en">Elder care and assisted living facilities</span><span class="lang-id">Perawatan lansia dan fasilitas perawatan</span></li>
+          <li><span class="step-num">✓</span><span class="lang-en">Home care / live-in care for Indonesian families</span><span class="lang-id">Perawatan di rumah / live-in untuk keluarga Indonesia</span></li>
+          <li><span class="step-num">✓</span><span class="lang-en">Community health centers</span><span class="lang-id">Pusat kesehatan komunitas</span></li>
+          <li><span class="step-num">✓</span><span class="lang-en">Private duty nursing and personal care assistance</span><span class="lang-id">Keperawatan tugas pribadi dan bantuan perawatan personal</span></li>
+          <li><span class="step-num">✓</span><span class="lang-en">Referrals from diaspora networks</span><span class="lang-id">Referensi dari jaringan diaspora</span></li>
+        </ul>
+      </div>
+      <div>
+        <div class="highlight-box">
+          <p class="lang-en">⚠️ <strong>Important framing:</strong> Bahasa ability is a <em>market advantage</em> — not a shortcut around licensure. You still need your credentials, NCLEX, and proper visa status. But your language skills can help you stand out, get referrals, and find community-facing roles faster.</p>
+          <p class="lang-id">⚠️ <strong>Framing penting:</strong> Kemampuan Bahasa adalah <em>keunggulan pasar</em> — bukan jalan pintas dari proses lisensi. Anda tetap membutuhkan kredensial, NCLEX, dan status visa yang tepat. Namun kemampuan bahasa Anda dapat membantu Anda menonjol dan mendapatkan peran lebih cepat.</p>
+        </div>
+        <div class="tool-grid" style="margin-top:1rem;">
+          <span class="chip green">Los Angeles</span>
+          <span class="chip green">San Francisco</span>
+          <span class="chip green">Seattle</span>
+          <span class="chip blue">Orange County</span>
+          <span class="chip blue">San Diego</span>
+          <span class="chip amber">Houston</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 8: ENGLISH ── -->
+  <div class="slide" id="s8">
+    <div class="slide-tag"><span class="lang-en">Section 5 — Language Readiness</span><span class="lang-id">Bagian 5 — Kesiapan Bahasa</span></div>
+    <h2><span class="lang-en">English Is a Career Tool</span><span class="lang-id">Bahasa Inggris Adalah Alat Karier</span></h2>
+    <p class="lang-en">English is not just for exams. It is your daily communication with patients, colleagues, doctors, and families. It will determine your promotions, your safety record, and your reputation.</p>
+    <p class="lang-id">Bahasa Inggris bukan hanya untuk ujian. Ini adalah komunikasi harian Anda dengan pasien, rekan, dokter, dan keluarga. Ini akan menentukan promosi, reputasi, dan rekam jejak keselamatan Anda.</p>
+    <div class="two-col" style="margin-top:1.5rem;">
+      <div>
+        <h3><span class="lang-en">What to practice</span><span class="lang-id">Apa yang perlu dilatih</span></h3>
+        <ul class="step-list">
+          <li><span class="step-num">→</span><span class="lang-en">Spoken English for patients and care teams</span><span class="lang-id">Bahasa Inggris lisan untuk pasien dan tim perawatan</span></li>
+          <li><span class="step-num">→</span><span class="lang-en">Written English for charting and documentation</span><span class="lang-id">Bahasa Inggris tertulis untuk pencatatan dan dokumentasi</span></li>
+          <li><span class="step-num">→</span><span class="lang-en">Medical vocabulary — procedures, medications, vitals</span><span class="lang-id">Kosakata medis — prosedur, obat-obatan, tanda vital</span></li>
+          <li><span class="step-num">→</span><span class="lang-en">Interview English — tell your story confidently</span><span class="lang-id">Bahasa Inggris wawancara — ceritakan kisah Anda dengan percaya diri</span></li>
+        </ul>
+      </div>
+      <div>
+        <h3><span class="lang-en">Practice these 4 questions now</span><span class="lang-id">Latih 4 pertanyaan ini sekarang</span></h3>
+        <ul class="step-list">
+          <li><span class="step-num">1</span>"Tell me about yourself."</li>
+          <li><span class="step-num">2</span>"Why do you want to work in the U.S.?"</li>
+          <li><span class="step-num">3</span>"Describe a time you handled a difficult patient."</li>
+          <li><span class="step-num">4</span>"What kind of unit do you want to work in?"</li>
+        </ul>
+        <div class="highlight-box" style="margin-top:1rem; padding:1rem;">
+          <p class="lang-en">🤖 Use ChatGPT or Claude to practice — <em>"Act as a hospital interviewer. Ask me one question at a time and correct my English."</em></p>
+          <p class="lang-id">🤖 Gunakan ChatGPT atau Claude untuk berlatih — <em>"Bertindaklah sebagai pewawancara rumah sakit. Ajukan satu pertanyaan sekaligus dan koreksi bahasa Inggris saya."</em></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 9: AI TOOLS OVERVIEW ── -->
+  <div class="slide slide-ai" id="s9">
+    <div class="slide-tag"><span class="lang-en">Section 6 — AI Tools</span><span class="lang-id">Bagian 6 — Alat AI</span></div>
+    <h2><span class="lang-en">Your AI Career Toolkit</span><span class="lang-id">Toolkit Karier AI Anda</span></h2>
+    <p class="lang-en">These tools are available today, mostly free, and can compress months of preparation into days when used well.</p>
+    <p class="lang-id">Alat-alat ini tersedia hari ini, sebagian besar gratis, dan dapat mempersingkat persiapan berbulan-bulan menjadi beberapa hari jika digunakan dengan baik.</p>
+    <div class="three-col" style="margin-top:1.5rem;">
+      <div class="card">
+        <span class="card-icon">💬</span>
+        <div class="card-title">ChatGPT</div>
+        <div class="card-sub lang-en">Resume drafting · Cover letters · Mock interviews · English practice · Study plans · Explain visa steps in plain language</div>
+        <div class="card-sub lang-id">Membuat CV · Surat lamaran · Wawancara simulasi · Latihan bahasa Inggris · Rencana belajar · Penjelasan langkah visa</div>
+        <div class="tool-grid" style="margin-top:.8rem;"><span class="chip green">Free tier</span><span class="chip green">chat.openai.com</span></div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🧠</span>
+        <div class="card-title">Claude (Anthropic)</div>
+        <div class="card-sub lang-en">Long-form writing · Document review · Cleaner summaries · Compare job offers and pathways · Build application materials</div>
+        <div class="card-sub lang-id">Penulisan panjang · Tinjauan dokumen · Ringkasan lebih bersih · Bandingkan tawaran kerja dan jalur · Bangun materi lamaran</div>
+        <div class="tool-grid" style="margin-top:.8rem;"><span class="chip green">Free tier</span><span class="chip green">claude.ai</span></div>
+      </div>
+      <div class="card">
+        <span class="card-icon">📁</span>
+        <div class="card-title">VS Code</div>
+        <div class="card-sub lang-en">Organize files and notes · Write professional documents · Store prompts and application materials · Learn light technical skills used in modern healthcare</div>
+        <div class="card-sub lang-id">Atur file dan catatan · Tulis dokumen profesional · Simpan prompt dan materi lamaran · Pelajari keterampilan teknis ringan</div>
+        <div class="tool-grid" style="margin-top:.8rem;"><span class="chip green">Free</span><span class="chip blue">code.visualstudio.com</span></div>
+      </div>
+      <div class="card">
+        <span class="card-icon">⚡</span>
+        <div class="card-title">Cursor</div>
+        <div class="card-sub lang-en">AI-assisted document and code creation · Build a simple portfolio website · Grow into tech-enabled healthcare roles</div>
+        <div class="card-sub lang-id">Pembuatan dokumen dan kode berbantuan AI · Bangun website portofolio sederhana · Berkembang ke peran kesehatan berbasis teknologi</div>
+        <div class="tool-grid" style="margin-top:.8rem;"><span class="chip amber">cursor.com</span></div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🐙</span>
+        <div class="card-title">GitHub + Copilot</div>
+        <div class="card-sub lang-en">Create a professional digital portfolio · Store and share projects · Show digital literacy to employers · This course lives on GitHub!</div>
+        <div class="card-sub lang-id">Buat portofolio digital profesional · Simpan dan bagikan proyek · Tunjukkan literasi digital kepada pemberi kerja · Kursus ini ada di GitHub!</div>
+        <div class="tool-grid" style="margin-top:.8rem;"><span class="chip green">Free</span><span class="chip blue">github.com</span></div>
+      </div>
+      <div class="card">
+        <span class="card-icon">🚀</span>
+        <div class="card-title">Lovable</div>
+        <div class="card-sub lang-en">Build a personal website or portfolio in minutes — no code required. Great for showing yourself professionally to international employers.</div>
+        <div class="card-sub lang-id">Bangun website atau portofolio pribadi dalam menit — tanpa kode. Bagus untuk menampilkan diri secara profesional kepada pemberi kerja internasional.</div>
+        <div class="tool-grid" style="margin-top:.8rem;"><span class="chip amber">lovable.dev</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 10: LIVE DEMOS ── -->
+  <div class="slide slide-ai" id="s10">
+    <div class="slide-tag"><span class="lang-en">Section 7 — Live Demos</span><span class="lang-id">Bagian 7 — Demo Langsung</span></div>
+    <h2><span class="lang-en">Try These Right Now</span><span class="lang-id">Coba Ini Sekarang</span></h2>
+    <div class="two-col">
+      <div>
+        <h3><span class="lang-en">Demo 1: Job Search Prompt</span><span class="lang-id">Demo 1: Prompt Pencarian Kerja</span></h3>
+        <div class="formula" style="font-size:.75rem; display:block; padding:1rem; line-height:1.6; color: var(--text-muted);">
+          <span style="color: var(--accent); background:none; padding:0;">"</span>Find me U.S. registered nurse jobs with visa sponsorship for internationally educated nurses in Florida, California, and Texas. Give me keywords, likely employers, and a checklist.<span style="color: var(--accent); background:none; padding:0;">"</span>
+        </div>
+        <h3 style="margin-top:1.5rem;"><span class="lang-en">Demo 2: English Practice</span><span class="lang-id">Demo 2: Latihan Bahasa Inggris</span></h3>
+        <div class="formula" style="font-size:.75rem; display:block; padding:1rem; line-height:1.6; color: var(--text-muted);">
+          <span style="color: var(--accent); background:none; padding:0;">"</span>Act as a hospital interviewer. Interview me for a med-surg nursing position in the U.S. Ask one question at a time and correct my English.<span style="color: var(--accent); background:none; padding:0;">"</span>
+        </div>
+      </div>
+      <div>
+        <h3><span class="lang-en">Demo 3: Resume Polish</span><span class="lang-id">Demo 3: Perbaikan Resume</span></h3>
+        <div class="formula" style="font-size:.75rem; display:block; padding:1rem; line-height:1.6; color: var(--text-muted);">
+          <span style="color: var(--accent); background:none; padding:0;">"</span>Rewrite my nurse resume for U.S. employers. Make it clear, strong, and professional. Highlight my clinical experience and certifications.<span style="color: var(--accent); background:none; padding:0;">"</span>
+        </div>
+        <h3 style="margin-top:1.5rem;"><span class="lang-en">Demo 4: GitHub Portfolio</span><span class="lang-id">Demo 4: Portofolio GitHub</span></h3>
+        <div class="card" style="margin-top:.5rem;">
+          <div class="card-sub lang-en">Show how to create a GitHub account → make a repo → add a README → turn on GitHub Pages → share the URL with an employer. This class's code is on GitHub — go look at it!</div>
+          <div class="card-sub lang-id">Tunjukkan cara membuat akun GitHub → buat repo → tambah README → aktifkan GitHub Pages → bagikan URL ke pemberi kerja. Kode kelas ini ada di GitHub — lihat sekarang!</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 11: SCAMS + SAFETY ── -->
+  <div class="slide" id="s11">
+    <div class="slide-tag"><span class="lang-en">Section 8 — Protect Yourself</span><span class="lang-id">Bagian 8 — Lindungi Diri Anda</span></div>
+    <h2><span class="lang-en">Scams, Risks &amp; Smart Decisions</span><span class="lang-id">Penipuan, Risiko &amp; Keputusan Cerdas</span></h2>
+    <div class="two-col">
+      <div>
+        <h3><span class="lang-en">Red flags — walk away from these</span><span class="lang-id">Tanda bahaya — hindari ini</span></h3>
+        <div class="warning-box">
+          <ul style="list-style:none; display:flex; flex-direction:column; gap:.5rem;">
+            <li>🚩 <span class="lang-en">Recruiters asking you to pay upfront fees</span><span class="lang-id">Rekruter yang meminta bayaran di muka</span></li>
+            <li>🚩 <span class="lang-en">Promises of sponsorship without a verified employer</span><span class="lang-id">Janji sponsor tanpa pemberi kerja yang terverifikasi</span></li>
+            <li>🚩 <span class="lang-en">Job offers that don't mention NCLEX or licensure</span><span class="lang-id">Tawaran kerja yang tidak menyebutkan NCLEX atau lisensi</span></li>
+            <li>🚩 <span class="lang-en">Agents without verifiable websites or references</span><span class="lang-id">Agen tanpa website atau referensi yang bisa diverifikasi</span></li>
+            <li>🚩 <span class="lang-en">Anything that sounds too easy or too fast</span><span class="lang-id">Apa pun yang terdengar terlalu mudah atau terlalu cepat</span></li>
+          </ul>
+        </div>
+      </div>
+      <div>
+        <h3><span class="lang-en">Always verify through</span><span class="lang-id">Selalu verifikasi melalui</span></h3>
+        <ul class="step-list">
+          <li><span class="step-num">✓</span><div><strong>NCSBN.org</strong> — <span class="lang-en">official U.S. nursing board</span><span class="lang-id">dewan keperawatan resmi A.S.</span></div></li>
+          <li><span class="step-num">✓</span><div><strong>CGFNS / TruMerit</strong> — <span class="lang-en">credential verification</span><span class="lang-id">verifikasi kredensial</span></div></li>
+          <li><span class="step-num">✓</span><div><strong>USCIS.gov</strong> — <span class="lang-en">immigration official source</span><span class="lang-id">sumber resmi imigrasi</span></div></li>
+          <li><span class="step-num">✓</span><div><strong>Travel.state.gov</strong> — <span class="lang-en">visa and employer sponsorship info</span><span class="lang-id">info visa dan sponsor pemberi kerja</span></div></li>
+          <li><span class="step-num">✓</span><div><span class="lang-en">Direct hospital and employer career pages</span><span class="lang-id">Halaman karier rumah sakit dan pemberi kerja langsung</span></div></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── SLIDE 12: CLOSING ── -->
+  <div class="slide slide-cover" id="s12">
+    <div class="slide-tag"><span class="lang-en">Closing + Q&amp;A</span><span class="lang-id">Penutup + Tanya Jawab</span></div>
+    <h2><span class="lang-en">Your Opportunity Is Real</span><span class="lang-id">Peluang Anda Nyata</span></h2>
+    <div class="highlight-box" style="margin-bottom:1.5rem;">
+      <p style="font-size:1.1rem; line-height:1.7;" class="lang-en">"Your opportunity is real, but it is built step by step. Improve your English. Organize your documents. Learn the licensure path. Use AI to move faster. Apply consistently. <strong>The people who win are the people who become clear, prepared, and persistent.</strong>"</p>
+      <p style="font-size:1.05rem; line-height:1.7;" class="lang-id">"Peluang Anda nyata, tetapi dibangun selangkah demi selangkah. Tingkatkan bahasa Inggris Anda. Atur dokumen Anda. Pelajari jalur lisensi. Gunakan AI untuk bergerak lebih cepat. Lamar secara konsisten. <strong>Orang yang berhasil adalah orang yang menjadi jelas, siap, dan gigih.</strong>"</p>
+    </div>
+    <div class="three-col">
+      <div class="card">
+        <div class="card-title lang-en">Ask yourself</div>
+        <div class="card-title lang-id">Tanya diri sendiri</div>
+        <div class="card-sub lang-en">Which country fits you best right now? What is your current English level?</div>
+        <div class="card-sub lang-id">Negara mana yang paling cocok untuk Anda sekarang? Bagaimana level bahasa Inggris Anda saat ini?</div>
+      </div>
+      <div class="card">
+        <div class="card-title lang-en">Your next 3 actions</div>
+        <div class="card-title lang-id">3 tindakan berikutnya</div>
+        <div class="card-sub lang-en">1. Create GitHub account<br>2. Run a ChatGPT resume prompt tonight<br>3. Search Indeed for your target role</div>
+        <div class="card-sub lang-id">1. Buat akun GitHub<br>2. Jalankan prompt resume ChatGPT malam ini<br>3. Cari di Indeed untuk peran target Anda</div>
+      </div>
+      <div class="card">
+        <div class="card-title lang-en">This course is on GitHub</div>
+        <div class="card-title lang-id">Kursus ini ada di GitHub</div>
+        <div class="card-sub lang-en">Bookmark the repo. Share with friends. The code that runs this page is yours to explore and learn from.</div>
+        <div class="card-sub lang-id">Tandai repo-nya. Bagikan ke teman. Kode yang menjalankan halaman ini adalah milik Anda untuk dijelajahi dan dipelajari.</div>
+        <div class="tool-grid" style="margin-top:.8rem;"><span class="chip green">github.com</span></div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation -->
+<div id="nav">
+  <button id="btn-prev" onclick="prevSlide()" disabled>←</button>
+  <span class="prog" id="prog">1 / 12</span>
+  <button id="btn-next" onclick="nextSlide()">→</button>
+</div>
+<div class="slide-num" id="slide-num">01</div>
+
+<script>
+  let current = 0;
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+
+  function goTo(n) {
+    slides[current].classList.remove('active');
+    slides[current].classList.add('exit');
+    setTimeout(() => slides[current - (n > current ? 0 : 0)].classList.remove('exit'), 500);
+
+    // Remove exit from old
+    const old = current;
+    current = n;
+
+    setTimeout(() => {
+      slides[old].classList.remove('exit');
+    }, 500);
+
+    slides[current].classList.add('active');
+    document.getElementById('prog').textContent = `${current + 1} / ${total}`;
+    document.getElementById('slide-num').textContent = String(current + 1).padStart(2, '0');
+    document.getElementById('progress').style.width = `${((current + 1) / total) * 100}%`;
+    document.getElementById('btn-prev').disabled = current === 0;
+    document.getElementById('btn-next').disabled = current === total - 1;
+  }
+
+  function nextSlide() { if (current < total - 1) goTo(current + 1); }
+  function prevSlide() { if (current > 0) goTo(current - 1); }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextSlide();
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevSlide();
+  });
+
+  // Touch support
+  let touchX = 0;
+  document.addEventListener('touchstart', e => touchX = e.touches[0].clientX);
+  document.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchX;
+    if (dx < -50) nextSlide();
+    if (dx > 50) prevSlide();
+  });
+
+  // Language
+  function setLang(lang) {
+    document.body.className = lang === 'id' ? 'id' : '';
+    document.querySelectorAll('#lang-toggle button').forEach((b, i) => {
+      b.classList.toggle('active', (i === 0 && lang === 'en') || (i === 1 && lang === 'id'));
+    });
+  }
+
+  // Init progress
+  document.getElementById('progress').style.width = `${(1 / total) * 100}%`;
+</script>
+</body>
+</html>
