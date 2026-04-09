@@ -6,7 +6,7 @@ A bilingual (English / Bahasa Indonesia) interactive course presentation for nur
 ---
 
 ## 🔗 Live Course Site
-👉 **[View the course slides →](https://[your-username].github.io/syedza-nursing-class/)**
+👉 **[View the course slides →](https://wildhash.github.io/syedza-nursing-class/)**
 
 ---
 
@@ -55,7 +55,7 @@ syedza-nursing-class/
 1. Fork this repo to your GitHub account
 2. Go to **Settings → Pages**
 3. Set source to `main` branch, root `/`
-4. Your site is live at `https://[username].github.io/syedza-nursing-class/`
+4. Your site is live at `https://wildhash.github.io/syedza-nursing-class/`
 
 ---
 

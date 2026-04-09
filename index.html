@@ -897,9 +897,7 @@
   function goTo(n) {
     slides[current].classList.remove('active');
     slides[current].classList.add('exit');
-    setTimeout(() => slides[current - (n > current ? 0 : 0)].classList.remove('exit'), 500);
 
-    // Remove exit from old
     const old = current;
     current = n;
 
